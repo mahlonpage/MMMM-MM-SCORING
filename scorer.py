@@ -1,8 +1,7 @@
 import os
 
 FOLDER_PATH = "./brackets"
-OPTIONS = ["WIN"]
-SEEDS = {"WIN":5}
+SEEDS = {}
 
 # Increment scoring based on tournament depth
 def get_round_value(game_number):
@@ -16,15 +15,20 @@ def get_round_value(game_number):
 # Error if the bracket is invalid.
 def validate_bracket(bracket):
     for pick in bracket:
-        if pick not in OPTIONS and pick != "...":
-            raise ValueError(f"not valid option {pick}")
+        if pick[0] not in {"E", "S", "W", "M"}:
+            print(f"{pick} is invalid.")
+        if get_seed(pick) > 16 or get_seed(pick) < 1:
+            print(f"{pick} is invalid. {get_seed(pick)}")
+
+def get_seed(pick):
+    return int(pick[1:])
 
 # Calculates the score for a bracket
 def score_bracket(predicted_results, actual_results):
     score = 0
     for i, (pick, result) in enumerate(zip(predicted_results, actual_results)):
         if pick == result:
-            score += SEEDS[pick] * get_round_value(i)
+            score += get_seed(pick) * get_round_value(i)
     return score
 
 # Get all the bracket files from folder.
@@ -54,7 +58,6 @@ def main():
         brackets.append((name, bracket_data))
 
     actual_results = read_bracket_from_file("true_bracket.txt")
-    validate_bracket(actual_results)
 
     # Score brackets
     scored_brackets = []

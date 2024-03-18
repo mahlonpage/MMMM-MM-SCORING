@@ -1,8 +1,8 @@
-E1
-E8
-E5
-E4
-E6
+E
+E
+E
+E
+E
 E
 E
 E
