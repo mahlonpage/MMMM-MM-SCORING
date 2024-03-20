@@ -149,11 +149,11 @@ def print_stats(df):
         value_counts = df[col].value_counts()
 
         # Print column name
-        print(f"Column: {col}")
+        print(f"{col}:")
 
         # Print distinct entries and their counts
         for value, count in value_counts.items():
-            print(f"    {ROSETTA_STONE[value]}: {count}")
+            print(f"\t[{value[1]}] {ROSETTA_STONE[value]} : {count}\t({round((count / sum(value_counts) * 100), 3)}%)")
 
 def main():
     df = load_df()
