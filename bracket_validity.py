@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from mapping import ROSETTA_STONE
 
 def seed_checker(df, games, seeds):
     #games = [0, 8, 16, 24]
@@ -142,9 +143,22 @@ def load_df():
 
     return df
 
+def print_stats(df):
+    for col in df.columns:
+        # Get unique values and their counts for the current column
+        value_counts = df[col].value_counts()
+
+        # Print column name
+        print(f"Column: {col}")
+
+        # Print distinct entries and their counts
+        for value, count in value_counts.items():
+            print(f"    {ROSETTA_STONE[value]}: {count}")
+
 def main():
     df = load_df()
-    all_checks(df)
+    #all_checks(df)
+    print_stats(df)
 
 if __name__ == "__main__":
     main()
