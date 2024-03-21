@@ -116,7 +116,7 @@ def load_df():
     for filename in os.listdir(folder_path):
         if filename.endswith('.txt'):  # Ensure we're only reading text files
             # Skip the best and worst files
-            if filename == "best_seeds.txt" or filename ==  "worst_seeds.txt":
+            if filename == "zzz_best_seeds.txt" or filename ==  "zzz_worst_seeds.txt":
                 continue
 
             file_path = os.path.join(folder_path, filename)
@@ -163,7 +163,7 @@ def print_stats(df):
 def main():
     df = load_df()
     all_checks(df)
-    print_stats(df)
+    #print_stats(df)
 
 if __name__ == "__main__":
     main()
