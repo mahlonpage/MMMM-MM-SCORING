@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from mapping import ROSETTA_STONE
+from mapping import ROSETTA_STONE, GAMES
 
 def seed_checker(df, games, seeds):
     #games = [0, 8, 16, 24]
@@ -139,7 +139,7 @@ def load_df():
             # Append file data to the main list
             data.append(file_data)
 
-    df = pd.DataFrame(data, columns=[f'Game {i}' for i in range(1, 64)])
+    df = pd.DataFrame(data, columns=GAMES)
 
     return df
 
@@ -153,11 +153,16 @@ def print_stats(df):
 
         # Print distinct entries and their counts
         for value, count in value_counts.items():
-            print(f"\t[{value[1]}] {ROSETTA_STONE[value]} : {count}\t({round((count / sum(value_counts) * 100), 3)}%)")
+            seed = str(value[1])
+            if len(seed) == 1: seed = " " + seed
+
+            num_picks = str(count)
+            if len(num_picks) == 1: num_picks = " " + num_picks
+            print(f"\t[{seed}] {ROSETTA_STONE[value]} : {num_picks}\t({round((count / sum(value_counts) * 100), 3)}%)")
 
 def main():
     df = load_df()
-    #all_checks(df)
+    all_checks(df)
     print_stats(df)
 
 if __name__ == "__main__":
