@@ -19,7 +19,7 @@ S
 S
 S
 S
-S
+S14
 S
 S
 M
@@ -28,7 +28,7 @@ M
 M
 M11
 M3
-M
+M7
 M
 E
 E
