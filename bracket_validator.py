@@ -163,7 +163,7 @@ def print_stats(df):
 def main():
     df = load_df()
     all_checks(df)
-    #print_stats(df)
+    print_stats(df)
 
 if __name__ == "__main__":
     main()
