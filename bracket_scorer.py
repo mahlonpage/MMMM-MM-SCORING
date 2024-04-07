@@ -1,4 +1,5 @@
 import os
+import argparse
 
 FOLDER_PATH = "./brackets"
 SEEDS = {}
@@ -24,11 +25,11 @@ def get_seed(pick):
     return int(pick[1:])
 
 # Calculates the score for a bracket
-def score_bracket(predicted_results, actual_results):
+def score_bracket(predicted_results, actual_results, standard=False):
     score = 0
     for i, (pick, result) in enumerate(zip(predicted_results, actual_results)):
         if pick == result:
-            score += get_seed(pick) * get_round_value(i)
+            score += get_round_value(i) * (10 if standard else get_seed(pick))
     return score
 
 # Get all the bracket files from folder.
@@ -43,7 +44,7 @@ def read_bracket_from_file(file_path):
     return bracket_data
 
 # Score all brackets and print results so far.
-def main():
+def main(standard=False):
     files = get_bracket_files()
     brackets = []
 
@@ -62,7 +63,7 @@ def main():
     # Score brackets
     scored_brackets = []
     for name, cur_bracket_data in brackets:
-        score = score_bracket(cur_bracket_data, actual_results)
+        score = score_bracket(cur_bracket_data, actual_results, standard)
         scored_brackets.append((name, score))
 
     # Print winners in order with scores
@@ -71,4 +72,9 @@ def main():
         print(f"{file}: {score}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--standard", action="store_true", default=False)
+
+    args = parser.parse_args()
+
+    main(args.standard)
